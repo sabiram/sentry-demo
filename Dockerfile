@@ -6,8 +6,9 @@ RUN apt-get update
 # Install necessary dependencies
 RUN apt-get install -y software-properties-common
 
-# Add Sentry repository
-RUN add-apt-repository -y ppa:sentry/sentry
+# Manually add Sentry repository
+RUN echo "deb http://ppa.launchpad.net/sentry/sentry/ubuntu focal main" > /etc/apt/sources.list.d/sentry.list \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4096R/90A6F6E5A19FC22CED8BFAD73EB114CF19617013
 
 # Update package lists again
 RUN apt-get update
