@@ -1,19 +1,17 @@
-# Use a base image that includes necessary dependencies
 FROM ubuntu:20.04
 
-# Set noninteractive mode
-ENV DEBIAN_FRONTEND noninteractive
+# Update package lists
+RUN apt-get update
+
+# Install necessary dependencies
+RUN apt-get install -y software-properties-common
+
+# Add Sentry repository
+RUN add-apt-repository -y ppa:sentry/sentry
+
+# Update package lists again
+RUN apt-get update
 
 # Install required packages
-RUN apt-get update && apt-get install -y postgresql redis-server sentry
-
-# Add your configuration and setup steps here
-
-# Expose ports if needed
-EXPOSE 5432 6379 9000
-
-# Start the services
-CMD ["service", "postgresql", "start"]
-CMD ["service", "redis-server", "start"]
-CMD ["service", "sentry", "start"]
+RUN apt-get install -y postgresql redis-server sentry
 
